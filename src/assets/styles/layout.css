@@ -1,0 +1,26 @@
+.layout {
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Base styles for individual layouts */
+.layout > * {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+/* Overlay screen */
+.overlay-screen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 170;
+  background-color: rgba(0, 0, 0, 0.3);
+}
