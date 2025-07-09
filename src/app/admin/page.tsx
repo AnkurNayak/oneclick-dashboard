@@ -15,7 +15,7 @@ const AdminDashboardMainPage = ({ children }: { children: ReactNode }) => {
   if (!isMounted) return <div>Loading...</div>;
 
   return (
-    <main className={`layout ${ui.theme}`}>
+    <main className={`layout ${ui.theme} text-foreground`}>
       <SidebarComponent />
       <div className="flex flex-col flex-auto w-full min-w-0 bg-background">
         <HeaderComponent />

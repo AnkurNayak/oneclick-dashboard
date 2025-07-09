@@ -1,4 +1,3 @@
-"use client";
 import LoginFormComponent from "@/components/admin/login/LoginFormComponent";
 import WelcomeMessageBoxComponent from "@/components/admin/login/WelcomeMessageBoxComponent";
 

@@ -1,28 +1,32 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import InputComponent from "../common/InputComponent";
+import { login } from "@/lib/api.service";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginFormData, loginSchema } from "@/lib/schema/LoginFormSchema";
+import { LoaderCircle } from "lucide-react";
+import { RedirectType, redirect } from "next/navigation";
 
 // Login Form
 const LoginFormComponent = () => {
-  const [loginInput, setLoginInput] = useState<{
-    email: string;
-    password: string;
-  }>({ email: "", password: "" });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
 
-  // Get inputs : higher order fn
-  const handleInputChange =
-    (field: keyof typeof loginInput) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setLoginInput((prev) => ({
-        ...prev,
-        [field]: e.target.value,
-      }));
-    };
-
-  useEffect(() => {
-    console.log("login input", loginInput);
-  }, [loginInput]);
+  const handleLogin = async (data: LoginFormData) => {
+    const response = await login({
+      email: data.email,
+      password: data.password,
+    });
+    if (response.success) {
+      redirect("/admin/dashboard", RedirectType.push);
+    }
+  };
 
   return (
     <div className="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
@@ -39,27 +43,30 @@ const LoginFormComponent = () => {
       <div className="mt-8 text-4xl font-extrabold tracking-tight leading-tight">
         Admin sign in
       </div>
-      <div className="mt-8">
+      <form className="mt-8" onSubmit={handleSubmit(handleLogin)}>
         <InputComponent
+          {...register("email")}
           label="Email Address*"
-          value={loginInput.email}
-          onChange={handleInputChange("email")}
-          errorMessage="Error Message"
           placeholder="Enter email"
           type="text"
+          errorMessage={errors.email?.message}
         />
         <InputComponent
+          {...register("password")}
           label="Password*"
-          value={loginInput.password}
-          onChange={handleInputChange("password")}
           type="password"
-          errorMessage={!loginInput.password ? "Password is required" : ""}
           placeholder="Enter password"
+          errorMessage={errors.password?.message}
         />
-        <button className="mt-6 h-10 rounded-full bg-primary w-full text-white cursor-pointer">
-          Sign in
+        <button
+          className={`"mt-6 h-10 rounded-full w-full text-white flex items-center justify-center cursor-pointer ${
+            isSubmitting ? "bg-gray-300" : "bg-primary"
+          }`}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? <LoaderCircle className="animate-spin" /> : "Sign in"}
         </button>
-      </div>
+      </form>
     </div>
   );
 };

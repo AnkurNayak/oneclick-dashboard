@@ -16,7 +16,6 @@
     -webkit-tap-highlight-color: transparent;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    @apply text-foreground;
   }
 
   html,
