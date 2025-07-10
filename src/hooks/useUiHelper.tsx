@@ -13,6 +13,11 @@ export default function useUiHelper() {
     setUiState((pv) => ({ ...pv, isSidenavOpen: isOpen }));
   };
 
+  // modal
+  const handleModal = (isOpen: boolean) => {
+    setUiState((pv) => ({ ...pv, isModalOpen: isOpen }));
+  };
+
   // toggle Theme
   const handleTheme = (theme: "dark" | "light") => {
     if (window !== undefined) {
@@ -21,5 +26,5 @@ export default function useUiHelper() {
     setUiState((pv) => ({ ...pv, theme: theme }));
   };
 
-  return { toggleSidenav, handleSidenav, handleTheme };
+  return { toggleSidenav, handleSidenav, handleTheme, handleModal };
 }

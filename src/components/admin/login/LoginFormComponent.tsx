@@ -6,10 +6,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormData, loginSchema } from "@/lib/schema/LoginFormSchema";
 import { LoaderCircle } from "lucide-react";
-import { RedirectType, redirect } from "next/navigation";
+import { useRouter } from "next/router";
 
 // Login Form
 const LoginFormComponent = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -23,8 +24,10 @@ const LoginFormComponent = () => {
       email: data.email,
       password: data.password,
     });
+
+    console.log(response);
     if (response.success) {
-      redirect("/admin/dashboard", RedirectType.push);
+      router.push("/admin/dashboard");
     }
   };
 

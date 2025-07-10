@@ -18,7 +18,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputComponentProps>(
     return (
       <div className="flex flex-col">
         <label className="font-medium">{label}</label>
-        <div className="h-10 w-full border border-primary rounded-md flex items-center">
+        <div className="h-10 w-full border border-primary rounded-md flex items-center dark:border-orange-400">
           <input
             autoComplete="off"
             ref={ref}
@@ -37,11 +37,11 @@ const InputComponent = forwardRef<HTMLInputElement, InputComponentProps>(
             </button>
           )}
         </div>
-        <div className="h-6">
+        {/* <div className="h-6">
           {errorMessage && (
             <p className="text-xs text-destructive">{errorMessage}</p>
           )}
-        </div>
+        </div> */}
       </div>
     );
   }

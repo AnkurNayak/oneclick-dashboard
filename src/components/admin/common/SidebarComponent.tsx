@@ -17,7 +17,7 @@ const navMenuItems = [
     title: "Home",
   },
   {
-    href: "/admin/cars",
+    href: "/admin/dashboard/cars",
     icon: <CircleGauge height={24} width={24} className="mr-4" />,
     title: "Cars",
   },
@@ -126,12 +126,12 @@ const UserProfileMenu = () => {
   };
 
   return (
-    <div className="relative ml-auto">
+    <div className="relative ml-auto h-full items-center flex justify-center">
       <button
         className="cursor-pointer"
         onClick={() => setIsMenuVisible(!isMenuVisible)}
       >
-        <CircleUserRound height={24} width={24} />
+        <CircleUserRound height={24} width={24} className="text-white/60" />
       </button>
       <AnimatePresence>
         {isMenuVisible && (
@@ -142,7 +142,7 @@ const UserProfileMenu = () => {
             transition={{
               type: "tween",
             }}
-            className="absolute bg-card w-48 rounded-md flex flex-col py-2 right-0 z-10"
+            className="absolute bg-card w-48 rounded-md flex flex-col py-2 right-0 top-8 z-10"
           >
             <div className="px-4 flex flex-col border-b border-accent pb-2">
               <span>admin name</span>

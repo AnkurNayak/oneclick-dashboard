@@ -6,6 +6,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 interface UIManager {
   isSidenavOpen: boolean;
   theme: "dark" | "light";
+  isModalOpen: boolean;
 }
 
 // All types for admin
@@ -30,6 +31,7 @@ const initialStates = {
   ui: {
     isSidenavOpen: false,
     theme: getInitialTheme(),
+    isModalOpen: false,
   },
 };
 

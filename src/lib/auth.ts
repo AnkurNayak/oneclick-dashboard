@@ -31,18 +31,18 @@ export async function verifyJWT(session: string | undefined = "") {
   }
 }
 
-// create session
-export async function createSession(userId: string) {
-  const expiresAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
-  const session = await generateJWT({ userId, expiresAt });
-  (await cookies()).set("session", session, {
-    httpOnly: true,
-    secure: true,
-    expires: expiresAt,
-  });
+// Set cookie
+export function setAuthCookie(res: any, session: string, expiresAt: Date) {
+  res.setHeader(
+    "Set-Cookie",
+    `session=${session}; Path=/; HttpOnly; Secure; SameSite=Lax; Expires=${expiresAt.toUTCString()}`
+  );
 }
 
-// Clear Session
-export async function removeSession() {
-  (await cookies()).delete("session");
+// clear cookie
+export function clearAuthCookie(res: any) {
+  res.setHeader(
+    "Set-Cookie",
+    "session=; Path=/; HttpOnly; Secure; SameSite=Lax; Expires=Thu, Max-Age=0"
+  );
 }

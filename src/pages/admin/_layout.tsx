@@ -4,7 +4,7 @@ import SidebarComponent from "@/components/admin/common/SidebarComponent";
 import { useAdminManager } from "@/context/AdminProvider";
 import { ReactNode, useEffect, useState } from "react";
 
-const AdminDashboardMainPage = ({ children }: { children: ReactNode }) => {
+const AdminDashboardLayout = ({ page }: { page: ReactNode }) => {
   const { ui } = useAdminManager();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -15,15 +15,17 @@ const AdminDashboardMainPage = ({ children }: { children: ReactNode }) => {
   if (!isMounted) return <div>Loading...</div>;
 
   return (
-    <main className={`layout ${ui.theme} text-foreground`}>
+    <main className={`layout ${ui.theme} text-foreground min-h-screen`}>
       <SidebarComponent />
       <div className="flex flex-col flex-auto w-full min-w-0 bg-background">
         <HeaderComponent />
-        <div className="flex flex-col flex-auto">{children}</div>
+        <div className="flex flex-col flex-auto relative overflow-x-hidden">
+          {page}
+        </div>
       </div>
       {ui.isSidenavOpen && <OverlayScreenComponent />}
     </main>
   );
 };
 
-export default AdminDashboardMainPage;
+export default AdminDashboardLayout;

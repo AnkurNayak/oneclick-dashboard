@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
   // If no session return /
 
   // If already logged in then navigate to dashboard
-  if (path === "/admin/login" && session) {
+  if (path === "/auth/login" && session) {
     // verfiy token
     const verifyToken = await verifyJWT(session);
     // console.log("verify token", verifyToken);
@@ -23,6 +23,6 @@ export async function middleware(request: NextRequest) {
 
   // If path dashboard and no session
   if (path === "/admin/dashboard" && !session) {
-    return NextResponse.redirect(new URL("/admin/login", request.url));
+    return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 }
