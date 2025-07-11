@@ -18,6 +18,10 @@ const LoginFormComponent = () => {
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "admin@oneclickmail.com",
+      password: "admin@123",
+    },
   });
 
   const handleLogin = async (data: LoginFormData) => {
@@ -30,6 +34,9 @@ const LoginFormComponent = () => {
     if (response.success) {
       router.push("/admin/dashboard");
       toast.success("Login Successful");
+    }
+    if (response.error) {
+      toast.error(response.error);
     }
   };
 

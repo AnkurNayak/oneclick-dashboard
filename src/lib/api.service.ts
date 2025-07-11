@@ -65,7 +65,6 @@ export const getCarLists = async ({
   currPage?: number | string;
   statusFilter?: string;
 } = {}) => {
-  console.log(baseUrl);
   try {
     const response = await fetch(`${baseUrl}/api/cars`, {
       method: "POST",
