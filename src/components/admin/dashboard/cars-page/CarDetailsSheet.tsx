@@ -63,6 +63,7 @@ const CarDetailsSheet = ({
       }
     } catch (err) {
       console.error("Error updating car", err);
+      toast.error("Failed to update car details");
     } finally {
       setIsLoading(false);
     }
