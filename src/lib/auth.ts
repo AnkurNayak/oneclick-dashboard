@@ -1,5 +1,4 @@
 import { SignJWT, jwtVerify } from "jose";
-import { cookies } from "next/headers";
 
 //.env is not working for JWT_SECRET but works with variable like DATABASE_URL=MY_SECRET
 // const jwtSecret = process.env.ACCESS_TOKEN_SECRET;
@@ -8,7 +7,11 @@ const jwtSecret = "MY_WEBSITE_SECRET";
 const encodeKey = new TextEncoder().encode(jwtSecret);
 
 type SessionProps = {
-  userId: string;
+  id: string;
+  email: string;
+  password: string;
+  role: string;
+  name: string;
   expiresAt: Date;
 };
 

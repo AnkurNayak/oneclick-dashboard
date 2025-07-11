@@ -1,5 +1,6 @@
 // Api calls we can store here
 
+import { verifyJWT } from "./auth";
 import { Car } from "./data/CarDB";
 
 /* ----------------------------------------------------------------------------------------------------- */
@@ -41,13 +42,10 @@ export const logOut = async () => {
 /* ----------------------------------------------------------------------------------------------------- */
 /*  @ Api calls for user
 /* ----------------------------------------------------------------------------------------------------- */
-export const getUser = async () => {
+export const getUser = async (token: string | undefined) => {
   try {
-    const response = await fetch("http://localhost:3000/api/user", {
-      method: "GET",
-    });
-    const data = await response.json();
-    return data;
+    const verifiedUserData = await verifyJWT();
+    return verifiedUserData;
   } catch (err) {
     console.error("Error in user get api", err);
   }
@@ -58,8 +56,10 @@ export const getUser = async () => {
 /* ----------------------------------------------------------------------------------------------------- */
 export const getCarLists = async ({
   currPage = 1,
+  statusFilter,
 }: {
   currPage?: number | string;
+  statusFilter?: string;
 } = {}) => {
   try {
     const response = await fetch(`http://localhost:3000/api/cars`, {
@@ -67,7 +67,7 @@ export const getCarLists = async ({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ currPage: currPage }),
+      body: JSON.stringify({ currPage: currPage, statusFilter: statusFilter }),
     });
 
     const data = await response.json();

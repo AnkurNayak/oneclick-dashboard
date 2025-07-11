@@ -8,6 +8,7 @@ import { CircleGauge, CircleUserRound, House, LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect, RedirectType, usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import { ReactNode, useEffect, useState } from "react";
 
 const navMenuItems = [
@@ -77,7 +78,7 @@ const SidebarComponent = () => {
               </div>
               <div className="flex flex-col items-center justify-center w-full mt-6">
                 <div className="w-full whitespace-nowrap text-white overflow-ellipsis overflow-hidden text-center leading-normal font-medium">
-                  Admin Name
+                  Ankur Nayak
                 </div>
                 <div className="w-full mt-0.5 whitespace-nowrap overflow-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-white/60">
                   admin@oneclickmail.com
@@ -116,12 +117,13 @@ const SidebarComponent = () => {
 const UserProfileMenu = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const router = useRouter();
 
   const handleLogout = async () => {
     setIsLoading(true);
     const response = await logOut();
     console.log("logout response", response);
-    if (response.success) redirect("/admin/login", RedirectType.push);
+    if (response.success) router.push("/auth/login");
     if (response) setIsLoading(false);
   };
 

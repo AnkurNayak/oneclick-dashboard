@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
   // get token from cookie
   const session = request.cookies.get("session")?.value;
 
-  const publicRoutes = ["/admin/login", "/"];
+  // const publicRoutes = ["/admin/login", "/"];
   // handle public routes
 
   // If no session return /
@@ -16,13 +16,14 @@ export async function middleware(request: NextRequest) {
     // verfiy token
     const verifyToken = await verifyJWT(session);
     // console.log("verify token", verifyToken);
+
     if (verifyToken?.userId) {
       return NextResponse.redirect(new URL("/admin/dashboard", request.url));
     }
   }
 
   // If path dashboard and no session
-  if (path === "/admin/dashboard" && !session) {
+  if (path.startsWith("/admin") && !session) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 }

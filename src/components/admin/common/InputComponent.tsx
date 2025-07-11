@@ -37,11 +37,11 @@ const InputComponent = forwardRef<HTMLInputElement, InputComponentProps>(
             </button>
           )}
         </div>
-        {/* <div className="h-6">
+        <div className="h-6">
           {errorMessage && (
             <p className="text-xs text-destructive">{errorMessage}</p>
           )}
-        </div> */}
+        </div>
       </div>
     );
   }

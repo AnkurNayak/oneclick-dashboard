@@ -3,7 +3,12 @@ import { getCarLists } from "@/lib/api.service";
 import { Car } from "@/lib/data/CarDB";
 import { GetServerSideProps } from "next";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, ReceiptText } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ListFilter,
+  ReceiptText,
+} from "lucide-react";
 import useUiHelper from "@/hooks/useUiHelper";
 import CarDetailsSheet from "@/components/admin/dashboard/cars-page/CarDetailsSheet";
 
@@ -57,7 +62,6 @@ const AdminCarsPage = ({
   const [pagination, setPagination] = useState(initialPagination);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
-
   // console.log(initialCars);
 
   // Optimization : selected row update : state change until next req
@@ -73,8 +77,6 @@ const AdminCarsPage = ({
   };
 
   const handlePageChange = async (newPage: number) => {
-    if (isLoading || !pagination || newPage === pagination.currentPage) return;
-
     setIsLoading(true);
     try {
       // Update cookie
@@ -90,12 +92,35 @@ const AdminCarsPage = ({
     }
   };
 
+  // handle filter
+  const handleFilterChange = async (filter: string | undefined) => {
+    setIsLoading(true);
+    try {
+      document.cookie = `currentpage=1; path=/`;
+      const response = await getCarLists({
+        currPage: 1,
+        statusFilter: filter,
+      });
+      setCars(response.cars);
+      setPagination(response.pagination);
+    } catch (err) {
+      console.error("Error filtering cars:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="bg-card flex min-w-0 flex-auto flex-col dark:bg-transparent sm:absolute w-full inset-0">
-      <div className="relative flex flex-0 flex-col border-b border-gray-200 dark:border-accent px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8">
+      <div className="relative flex flex-0 border-b border-gray-200 dark:border-accent px-6 py-8 items-center justify-between md:px-8">
         <h4 className="text-4xl font-extrabold tracking-tight">Car Listing</h4>
+        <CarFilterer onFilterChange={handleFilterChange} />
       </div>
-      <CarsTable cars={cars} onSelectedCar={handleSelectedCar} />
+      <CarsTable
+        cars={cars}
+        onSelectedCar={handleSelectedCar}
+        isLoading={isLoading}
+      />
       <PaginationComponent
         pagination={pagination}
         onPageChange={handlePageChange}
@@ -106,6 +131,48 @@ const AdminCarsPage = ({
           onSelectedCar={handleSelectedCar}
           onCarUpdate={handleCarUpdate}
         />
+      )}
+    </div>
+  );
+};
+
+const CarFilterer = ({
+  onFilterChange,
+}: {
+  onFilterChange: (filter: string | undefined) => void;
+}) => {
+  const filters = ["pending", "approved", "rejected"];
+  const [selected, setSelected] = useState<null | string>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="flex flex-col relative text-sm z-20">
+      <button
+        className="rounded-md px-4 h-10 bg-primary flex items-center gap-2 cursor-pointer"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <ListFilter height={16} width={16} />
+        Filters
+      </button>
+
+      {isOpen && (
+        <div className="absolute top-full left-0 mt-1 w-full bg-accent shadow-md rounded-md z-10 overflow-hidden">
+          {filters.map((filter) => (
+            <div
+              key={filter}
+              className={`px-4 py-2 cursor-pointer hover:bg-orange-500 ${
+                selected === filter ? "bg-accent font-medium" : ""
+              }`}
+              onClick={() => {
+                setSelected(filter);
+                setIsOpen(false);
+                onFilterChange(filter);
+              }}
+            >
+              {filter.charAt(0).toUpperCase() + filter.slice(1)}
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
@@ -128,9 +195,11 @@ export const getStatusColor = (status: string) => {
 const CarsTable = ({
   cars,
   onSelectedCar,
+  isLoading,
 }: {
   cars: Car[];
   onSelectedCar: (car: Car) => void;
+  isLoading: boolean;
 }) => {
   const { handleModal } = useUiHelper();
   const handleOpenCarDetails = (car: Car) => {
@@ -150,45 +219,75 @@ const CarsTable = ({
             <div className="hidden sm:block">Status</div>
             <div>Details</div>
           </div>
-          {cars.map((car, index) => (
-            <div
-              className="car-table-grid grid items-center gap-4 border-b border-gray-200 dark:border-accent px-6 py-3 md:px-8"
-              key={index}
-            >
-              <div className="relative mr-6 flex h-12 w-12 flex-0 items-center justify-center overflow-hidden rounded border border-gray-300">
-                <Image
-                  src={car.imageUrl}
-                  height={96}
-                  width={96}
-                  loading="eager"
-                  alt="car"
-                />
-              </div>
-
-              <div>
-                {car.make}-{car.model}
-              </div>
-              <div className="hidden lg:block">{car.dailyRate}</div>
-              <div className="hidden lg:block">{car.color}</div>
-              <div className="hidden md:block">{car.location}</div>
-              <div
-                className={`rounded-full hidden sm:flex items-center justify-center font-medium ${getStatusColor(
-                  car.status
-                )}`}
-              >
-                {car.status}
-              </div>
-              <div className="ml-3">
-                <button
-                  className="hover:text-primary cursor-pointer h-full flex items-center justify-center"
-                  onClick={() => handleOpenCarDetails(car)}
+          {isLoading
+            ? Array.from({ length: 15 }, (_, index) => <CarsTableLoader />)
+            : cars.map((car, index) => (
+                <div
+                  className="car-table-grid grid items-center gap-4 border-b border-gray-200 dark:border-accent px-6 py-3 md:px-8"
+                  key={index}
                 >
-                  <ReceiptText height={16} width={16} />
-                </button>
-              </div>
-            </div>
-          ))}
+                  <div className="relative mr-6 flex h-12 w-12 flex-0 items-center justify-center overflow-hidden rounded border border-gray-300">
+                    <Image
+                      src={car.imageUrl}
+                      height={96}
+                      width={96}
+                      loading="eager"
+                      alt="car"
+                    />
+                  </div>
+
+                  <div>
+                    {car.make}-{car.model}
+                  </div>
+                  <div className="hidden lg:block">{car.dailyRate}</div>
+                  <div className="hidden lg:block">{car.color}</div>
+                  <div className="hidden md:block">{car.location}</div>
+                  <div
+                    className={`rounded-full hidden sm:flex items-center justify-center font-medium ${getStatusColor(
+                      car.status
+                    )}`}
+                  >
+                    {car.status}
+                  </div>
+                  <div className="ml-3">
+                    <button
+                      className="hover:text-primary cursor-pointer h-full flex items-center justify-center"
+                      onClick={() => handleOpenCarDetails(car)}
+                    >
+                      <ReceiptText height={16} width={16} />
+                    </button>
+                  </div>
+                </div>
+              ))}
         </div>
+      </div>
+    </div>
+  );
+};
+
+const CarsTableLoader = () => {
+  return (
+    <div className="car-table-grid grid items-center gap-4 border-b border-gray-200 dark:border-accent px-6 py-3 md:px-8">
+      <div className="relative mr-6 flex h-12 w-12 flex-0 items-center justify-center overflow-hidden rounded border border-gray-300 dark:border-gray-600">
+        <div className="h-full w-full bg-gray-200 dark:bg-gray-700 animate-pulse rounded" />
+      </div>
+      <div>
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded w-24" />
+      </div>
+      <div className="hidden lg:block">
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded w-16" />
+      </div>
+      <div className="hidden lg:block">
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded w-12" />
+      </div>
+      <div className="hidden md:block">
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded w-20" />
+      </div>
+      <div className="hidden sm:block">
+        <div className="h-6 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-full w-16" />
+      </div>
+      <div className="ml-3">
+        <div className="h-4 w-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded" />
       </div>
     </div>
   );

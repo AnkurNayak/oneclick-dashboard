@@ -9,7 +9,7 @@
       "dailyRate": 12,
       "mileage": 4500,
       "color": "Daytona Gray",
-      "status": "rejected",
+      "status": "pending",
       "imageUrl": "https://static.oneclickdrive.com/uploads/premcars/Audi-R8-Coupe-2022_11151_6890111894-10_11151__small.jpg",
       "description": "V10 engine with 602 HP. Full carbon fiber package. Like-new condition with ceramic coating.",
       "owner": {
@@ -25,7 +25,7 @@
         "Virtual Cockpit"
       ],
       "submissionDate": "2023-05-10T14:30:00Z",
-      "lastUpdated": "2025-07-10T21:46:42.984Z"
+      "lastUpdated": "2025-07-10T21:49:02.880Z"
     },
     {
       "id": "2",
@@ -360,7 +360,7 @@
       "dailyRate": 650,
       "mileage": 28500,
       "color": "Byron Blue",
-      "status": "pending",
+      "status": "rejected",
       "imageUrl": "https://static.oneclickdrive.com/uploads/cars/Land-Rover-Range-Rover-Velar-2020_34468_32511742850-10_small.jpg?co=3.5",
       "description": "3.0L Supercharged V6 with 380 HP. R-Dynamic SE Package.",
       "owner": {
@@ -376,7 +376,7 @@
         "Touch Pro Duo"
       ],
       "submissionDate": "2023-05-11T10:15:00Z",
-      "lastUpdated": "2023-05-13T14:30:00Z"
+      "lastUpdated": "2025-07-10T21:56:21.126Z"
     },
     {
       "id": "15",

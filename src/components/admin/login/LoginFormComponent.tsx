@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormData, loginSchema } from "@/lib/schema/LoginFormSchema";
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/router";
+import { toast } from "sonner";
 
 // Login Form
 const LoginFormComponent = () => {
@@ -25,9 +26,10 @@ const LoginFormComponent = () => {
       password: data.password,
     });
 
-    console.log(response);
+    console.log("lgoin response", response);
     if (response.success) {
       router.push("/admin/dashboard");
+      toast.success("Login Successful");
     }
   };
 

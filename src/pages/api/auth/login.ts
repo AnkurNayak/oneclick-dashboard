@@ -37,7 +37,7 @@ export default async function handler(
     // if correct credentials
     // Create session && set cookie
     const expiresAt = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
-    const session = await generateJWT({ userId: admin.id, expiresAt });
+    const session = await generateJWT({ ...admin, expiresAt });
     setAuthCookie(res, session, expiresAt);
 
     return res.status(200).json({

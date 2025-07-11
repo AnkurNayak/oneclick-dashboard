@@ -12,28 +12,35 @@ export default async function handler(
     });
   }
 
+  const AllCars = await getCars();
+
+  // filter logic
+  let filteredCars = AllCars;
+
   try {
-    // Parse the request body
-    const { currPage } =
-      typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-
-    if (typeof currPage !== "number" || currPage < 1) {
-      return res.status(400).json({
-        success: false,
-        error: "Invalid currPage parameter",
-      });
-    }
-
-    const AllCars = await getCars();
-
     // Add 1 sec delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
+    const { currPage, statusFilter } = req.body;
+
+    // filter logic
+    if (
+      statusFilter &&
+      ["approved", "pending", "rejected"].includes(statusFilter)
+    ) {
+      filteredCars = AllCars.filter((car) => car.status === statusFilter);
+    }
+
+    console.log("filtere cars", filteredCars);
+
+    // console.log("req body console", req.body);
     const startingPage = (currPage - 1) * 15;
     const endingPage = startingPage + 15;
-    const displayedCars = AllCars.slice(startingPage, endingPage);
-    const totalCars = AllCars.length;
+    const displayedCars = filteredCars.slice(startingPage, endingPage);
+    const totalCars = filteredCars.length;
     const totalPages = Math.ceil(totalCars / 15);
+
+    // console.log(displayedCars);
 
     return res.status(200).json({
       success: true,
@@ -49,7 +56,6 @@ export default async function handler(
       },
     });
   } catch (error) {
-    console.error("Error in /api/cars:", error);
     return res.status(500).json({
       success: false,
       error: "Internal server error",

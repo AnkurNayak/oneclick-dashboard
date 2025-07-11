@@ -3,6 +3,7 @@ import "@/assets/styles/globals.css";
 import { AdminProvider } from "@/context/AdminProvider";
 import { usePathname } from "next/navigation";
 import AdminDashboardLayout from "./admin/_layout";
+import { Toaster } from "sonner";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const pathname = usePathname();
@@ -16,6 +17,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       ) : (
         <Component {...pageProps} />
       )}
+      <Toaster />
     </div>
   );
 }
