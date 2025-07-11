@@ -3,7 +3,10 @@
 import { verifyJWT } from "./auth";
 import { Car } from "./data/CarDB";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL ||
+  "https://oneclick-dashboard-two.vercel.app" ||
+  "https://oneclick-dashboard-2xmzw93pn-ankurnayaks-projects.vercel.app";
 /* ----------------------------------------------------------------------------------------------------- */
 /*  @ Authentication
 /* ----------------------------------------------------------------------------------------------------- */
@@ -62,6 +65,7 @@ export const getCarLists = async ({
   currPage?: number | string;
   statusFilter?: string;
 } = {}) => {
+  console.log(baseUrl);
   try {
     const response = await fetch(`${baseUrl}/api/cars`, {
       method: "POST",

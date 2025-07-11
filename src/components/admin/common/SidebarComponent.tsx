@@ -122,7 +122,7 @@ const UserProfileMenu = () => {
   const handleLogout = async () => {
     setIsLoading(true);
     const response = await logOut();
-    console.log("logout response", response);
+    // console.log("logout response", response);
     if (response.success) router.push("/auth/login");
     if (response) setIsLoading(false);
   };
@@ -173,7 +173,8 @@ type NavProps = {
 
 const NavItems = ({ href, icon, menuTitle }: NavProps) => {
   const pathname = usePathname();
-
+  const { handleSidenav } = useUiHelper();
+  const windowWidth = useWindowWidth();
   // console.log(pathname);
   return (
     <div className="mx-3">
@@ -182,6 +183,9 @@ const NavItems = ({ href, icon, menuTitle }: NavProps) => {
         className={`flex items-center justify-start py-2.5 px-4 rounded-md hover:bg-primary text-white ${
           pathname === href && "bg-white/10"
         }`}
+        onClick={() =>
+          windowWidth && windowWidth >= 960 ? null : handleSidenav(false)
+        }
       >
         {icon}
         <span className="font-medium text-sm">{menuTitle}</span>
