@@ -2,15 +2,11 @@ import { useState } from "react";
 import { getCarLists } from "@/lib/api.service";
 import { Car } from "@/lib/data/CarDB";
 import { GetServerSideProps } from "next";
-import Image from "next/image";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ListFilter,
-  ReceiptText,
-} from "lucide-react";
-import useUiHelper from "@/hooks/useUiHelper";
+import { ChevronLeft, ChevronRight, ListFilter } from "lucide-react";
 import CarDetailsSheet from "@/components/admin/dashboard/cars-page/CarDetailsSheet";
+import CarsTable from "@/components/admin/dashboard/cars-page/CarsTable";
+import PaginationComponent from "@/components/admin/dashboard/cars-page/PaginationComponent";
+import CarFilterer from "@/components/admin/dashboard/cars-page/CarFilter";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req } = context;
@@ -136,48 +132,6 @@ const AdminCarsPage = ({
   );
 };
 
-const CarFilterer = ({
-  onFilterChange,
-}: {
-  onFilterChange: (filter: string | undefined) => void;
-}) => {
-  const filters = ["pending", "approved", "rejected"];
-  const [selected, setSelected] = useState<null | string>(null);
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="flex flex-col relative text-sm z-20">
-      <button
-        className="rounded-md px-4 h-10 bg-primary flex items-center gap-2 cursor-pointer"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <ListFilter height={16} width={16} />
-        Filters
-      </button>
-
-      {isOpen && (
-        <div className="absolute top-full left-0 mt-1 w-full bg-accent shadow-md rounded-md z-10 overflow-hidden">
-          {filters.map((filter) => (
-            <div
-              key={filter}
-              className={`px-4 py-2 cursor-pointer hover:bg-orange-500 ${
-                selected === filter ? "bg-accent font-medium" : ""
-              }`}
-              onClick={() => {
-                setSelected(filter);
-                setIsOpen(false);
-                onFilterChange(filter);
-              }}
-            >
-              {filter.charAt(0).toUpperCase() + filter.slice(1)}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
 // statis color
 export const getStatusColor = (status: string) => {
   switch (status) {
@@ -190,158 +144,6 @@ export const getStatusColor = (status: string) => {
     default:
       return "bg-gray-600";
   }
-};
-
-const CarsTable = ({
-  cars,
-  onSelectedCar,
-  isLoading,
-}: {
-  cars: Car[];
-  onSelectedCar: (car: Car) => void;
-  isLoading: boolean;
-}) => {
-  const { handleModal } = useUiHelper();
-  const handleOpenCarDetails = (car: Car) => {
-    handleModal(true);
-    onSelectedCar(car);
-  };
-  return (
-    <div className="flex flex-auto overflow-hidden">
-      <div className="flex flex-auto flex-col overflow-hidden sm:mb-18 sm:overflow-y-auto">
-        <div className="grid">
-          <div className="car-table-grid sticky top-0 z-10 grid gap-4 bg-gray-50 px-6 py-4 text-md font-semibold shadow dark:bg-black dark:bg-opacity-5 md:px-8">
-            <div></div>
-            <div>Car</div>
-            <div className="hidden lg:block">Daily Rate</div>
-            <div className="hidden lg:block">Color</div>
-            <div className="hidden md:block">Location</div>
-            <div className="hidden sm:block">Status</div>
-            <div>Details</div>
-          </div>
-          {isLoading
-            ? Array.from({ length: 15 }, (_, index) => <CarsTableLoader />)
-            : cars.map((car, index) => (
-                <div
-                  className="car-table-grid grid items-center gap-4 border-b border-gray-200 dark:border-accent px-6 py-3 md:px-8"
-                  key={index}
-                >
-                  <div className="relative mr-6 flex h-12 w-12 flex-0 items-center justify-center overflow-hidden rounded border border-gray-300">
-                    <Image
-                      src={car.imageUrl}
-                      height={96}
-                      width={96}
-                      loading="eager"
-                      alt="car"
-                    />
-                  </div>
-
-                  <div>
-                    {car.make}-{car.model}
-                  </div>
-                  <div className="hidden lg:block">{car.dailyRate}</div>
-                  <div className="hidden lg:block">{car.color}</div>
-                  <div className="hidden md:block">{car.location}</div>
-                  <div
-                    className={`rounded-full hidden sm:flex items-center justify-center font-medium ${getStatusColor(
-                      car.status
-                    )}`}
-                  >
-                    {car.status}
-                  </div>
-                  <div className="ml-3">
-                    <button
-                      className="hover:text-primary cursor-pointer h-full flex items-center justify-center"
-                      onClick={() => handleOpenCarDetails(car)}
-                    >
-                      <ReceiptText height={16} width={16} />
-                    </button>
-                  </div>
-                </div>
-              ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const CarsTableLoader = () => {
-  return (
-    <div className="car-table-grid grid items-center gap-4 border-b border-gray-200 dark:border-accent px-6 py-3 md:px-8">
-      <div className="relative mr-6 flex h-12 w-12 flex-0 items-center justify-center overflow-hidden rounded border border-gray-300 dark:border-gray-600">
-        <div className="h-full w-full bg-gray-200 dark:bg-gray-700 animate-pulse rounded" />
-      </div>
-      <div>
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded w-24" />
-      </div>
-      <div className="hidden lg:block">
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded w-16" />
-      </div>
-      <div className="hidden lg:block">
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded w-12" />
-      </div>
-      <div className="hidden md:block">
-        <div className="h-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded w-20" />
-      </div>
-      <div className="hidden sm:block">
-        <div className="h-6 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-full w-16" />
-      </div>
-      <div className="ml-3">
-        <div className="h-4 w-4 bg-gray-200 dark:bg-gray-700 animate-pulse rounded" />
-      </div>
-    </div>
-  );
-};
-
-const PaginationComponent = ({
-  pagination,
-  onPageChange,
-}: {
-  pagination: {
-    currentPage: number;
-    totalCars: number;
-    totalPages: number;
-    hasNext: boolean;
-    hasPrevious: boolean;
-  };
-  onPageChange: (newPage: number) => void;
-}) => {
-  return (
-    <div className="z-10 bg-accent border border-card sm:bottom-0 sm:inset-x-0 sm:absolute">
-      <div
-        className="flex items-center justify-center space-x-4"
-        style={{ height: "72px" }}
-      >
-        <button
-          className={
-            "h-6 w-6 rounded-full hover:bg-primary flex items-center justify-center cursor-pointer"
-          }
-          onClick={() => onPageChange(pagination.currentPage - 1)}
-          disabled={pagination.currentPage === 1}
-        >
-          <ChevronLeft height={16} width={16} />
-        </button>
-        {Array.from({ length: pagination.totalPages }, (_, index) => (
-          <button
-            key={index + 1}
-            className={`w-8 h-8 rounded-md hover:bg-primary cursor-pointer ${
-              pagination.currentPage === index + 1 && "bg-card"
-            }`}
-            onClick={() => onPageChange(index + 1)}
-          >
-            {index + 1}
-          </button>
-        ))}
-        <button
-          className="h-6 w-6 rounded-full hover:bg-primary flex items-center justify-center cursor-pointer"
-          onClick={() => onPageChange(pagination.currentPage + 1)}
-          disabled={pagination.currentPage === pagination.totalPages}
-        >
-          <ChevronRight height={16} width={16} />
-        </button>
-      </div>
-    </div>
-  );
 };
 
 export default AdminCarsPage;

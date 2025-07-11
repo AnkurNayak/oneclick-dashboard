@@ -360,7 +360,7 @@
       "dailyRate": 650,
       "mileage": 28500,
       "color": "Byron Blue",
-      "status": "rejected",
+      "status": "approved",
       "imageUrl": "https://static.oneclickdrive.com/uploads/cars/Land-Rover-Range-Rover-Velar-2020_34468_32511742850-10_small.jpg?co=3.5",
       "description": "3.0L Supercharged V6 with 380 HP. R-Dynamic SE Package.",
       "owner": {
@@ -376,7 +376,7 @@
         "Touch Pro Duo"
       ],
       "submissionDate": "2023-05-11T10:15:00Z",
-      "lastUpdated": "2025-07-10T21:56:21.126Z"
+      "lastUpdated": "2025-07-11T00:28:27.925Z"
     },
     {
       "id": "15",

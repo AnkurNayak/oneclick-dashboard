@@ -31,7 +31,7 @@ export default async function handler(
       filteredCars = AllCars.filter((car) => car.status === statusFilter);
     }
 
-    console.log("filtere cars", filteredCars);
+    // console.log("filtere cars", filteredCars);
 
     // console.log("req body console", req.body);
     const startingPage = (currPage - 1) * 15;

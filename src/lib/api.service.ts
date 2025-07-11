@@ -3,6 +3,7 @@
 import { verifyJWT } from "./auth";
 import { Car } from "./data/CarDB";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 /* ----------------------------------------------------------------------------------------------------- */
 /*  @ Authentication
 /* ----------------------------------------------------------------------------------------------------- */
@@ -62,7 +63,7 @@ export const getCarLists = async ({
   statusFilter?: string;
 } = {}) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/cars`, {
+    const response = await fetch(`${baseUrl}/api/cars`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -83,16 +84,13 @@ export const getCarLists = async ({
 
 export const updateCar = async ({ carData }: { carData: Car }) => {
   try {
-    const response = await fetch(
-      `http://localhost:3000/api/cars/${carData.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(carData),
-      }
-    );
+    const response = await fetch(`${baseUrl}/api/cars/${carData.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(carData),
+    });
     const updatedCar = await response.json();
     return updatedCar;
   } catch (error) {
