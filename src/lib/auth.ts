@@ -1,4 +1,5 @@
 import { SignJWT, jwtVerify } from "jose";
+import { NextApiResponse } from "next";
 
 //.env is not working for JWT_SECRET but works with variable like DATABASE_URL=MY_SECRET
 // const jwtSecret = process.env.ACCESS_TOKEN_SECRET;
@@ -29,13 +30,17 @@ export async function verifyJWT(session: string | undefined = "") {
       algorithms: ["HS256"],
     });
     return payload;
-  } catch (error) {
-    console.log("Failed to verify session");
+  } catch (err) {
+    console.error("Failed to verify session", err);
   }
 }
 
 // Set cookie
-export function setAuthCookie(res: any, session: string, expiresAt: Date) {
+export function setAuthCookie(
+  res: NextApiResponse,
+  session: string,
+  expiresAt: Date
+) {
   res.setHeader(
     "Set-Cookie",
     `session=${session}; Path=/; HttpOnly; Secure; SameSite=Lax; Expires=${expiresAt.toUTCString()}`
@@ -43,7 +48,7 @@ export function setAuthCookie(res: any, session: string, expiresAt: Date) {
 }
 
 // clear cookie
-export function clearAuthCookie(res: any) {
+export function clearAuthCookie(res: NextApiResponse) {
   res.setHeader(
     "Set-Cookie",
     "session=; Path=/; HttpOnly; Secure; SameSite=Lax; Expires=Thu, Max-Age=0"

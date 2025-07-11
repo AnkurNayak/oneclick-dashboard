@@ -47,4 +47,6 @@ const InputComponent = forwardRef<HTMLInputElement, InputComponentProps>(
   }
 );
 
+// display rule : build error
+InputComponent.displayName = "InputComponent";
 export default InputComponent;

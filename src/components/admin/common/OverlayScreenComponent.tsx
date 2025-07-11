@@ -1,6 +1,5 @@
 import useUiHelper from "@/hooks/useUiHelper";
 import useWindowWidth from "@/hooks/useWindowWidth";
-import { useEffect } from "react";
 
 const OverlayScreenComponent = () => {
   const { handleSidenav } = useUiHelper();

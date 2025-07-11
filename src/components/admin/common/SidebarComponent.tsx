@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CircleGauge, CircleUserRound, House, LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect, RedirectType, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 import { ReactNode, useEffect, useState } from "react";
 
@@ -31,7 +31,7 @@ const SidebarComponent = () => {
 
   useEffect(() => {
     if (windowWidth) {
-      windowWidth >= 960 ? handleSidenav(true) : handleSidenav(false);
+      handleSidenav(windowWidth >= 960);
     }
   }, [windowWidth]);
 

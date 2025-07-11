@@ -43,7 +43,7 @@ export const logOut = async () => {
 /* ----------------------------------------------------------------------------------------------------- */
 /*  @ Api calls for user
 /* ----------------------------------------------------------------------------------------------------- */
-export const getUser = async (token: string | undefined) => {
+export const getUser = async () => {
   try {
     const verifiedUserData = await verifyJWT();
     return verifiedUserData;

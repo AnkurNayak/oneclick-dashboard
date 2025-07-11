@@ -2,7 +2,6 @@ import { useState } from "react";
 import { getCarLists } from "@/lib/api.service";
 import { Car } from "@/lib/data/CarDB";
 import { GetServerSideProps } from "next";
-import { ChevronLeft, ChevronRight, ListFilter } from "lucide-react";
 import CarDetailsSheet from "@/components/admin/dashboard/cars-page/CarDetailsSheet";
 import CarsTable from "@/components/admin/dashboard/cars-page/CarsTable";
 import PaginationComponent from "@/components/admin/dashboard/cars-page/PaginationComponent";
