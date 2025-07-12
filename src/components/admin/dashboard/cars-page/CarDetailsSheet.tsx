@@ -16,11 +16,9 @@ import { toast } from "sonner";
 
 const CarDetailsSheet = ({
   selectedCar,
-  onSelectedCar,
   onCarUpdate,
 }: {
   selectedCar: Car;
-  onSelectedCar: (cardata: Car | null) => void;
   onCarUpdate: (updatedCar: Car) => void;
 }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -61,11 +59,9 @@ const CarDetailsSheet = ({
         onCarUpdate(updateCarRes.data);
         toast.success("Car data updated successfully");
       }
-      if (updateCarRes.error) {
-        toast.error("Failed to update car data");
-      }
     } catch (err) {
       console.error("Error updating car", err);
+      toast.error("Failed to update car details");
     } finally {
       setIsLoading(false);
     }
@@ -155,7 +151,6 @@ const CarDetailsSheet = ({
                     className="p-2 hover:bg-gray-200 hover:dark:bg-card rounded-full transition-colors cursor-pointer"
                     onClick={() => {
                       handleModal(false);
-                      onSelectedCar(null);
                     }}
                     disabled={isLoading}
                   >

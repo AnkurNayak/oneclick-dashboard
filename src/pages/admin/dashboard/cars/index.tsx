@@ -64,7 +64,6 @@ const AdminCarsPage = ({
     setCars((prevCars) =>
       prevCars.map((car) => (car.id === updatedCar.id ? updatedCar : car))
     );
-    setSelectedCar(null);
   };
 
   const handleSelectedCar = (cardata: Car | null) => {
@@ -123,7 +122,6 @@ const AdminCarsPage = ({
       {selectedCar && (
         <CarDetailsSheet
           selectedCar={selectedCar}
-          onSelectedCar={handleSelectedCar}
           onCarUpdate={handleCarUpdate}
         />
       )}

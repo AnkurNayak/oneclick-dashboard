@@ -9,7 +9,7 @@
       "dailyRate": 12,
       "mileage": 4500,
       "color": "Daytona Gray",
-      "status": "rejected",
+      "status": "approved",
       "imageUrl": "https://static.oneclickdrive.com/uploads/premcars/Audi-R8-Coupe-2022_11151_6890111894-10_11151__small.jpg",
       "description": "V10 ",
       "owner": {
@@ -23,7 +23,7 @@
         "Quattro AWD"
       ],
       "submissionDate": "2023-05-10T14:30:00Z",
-      "lastUpdated": "2025-07-11T02:03:26.805Z"
+      "lastUpdated": "2025-07-12T06:59:50.109Z"
     },
     {
       "id": "2",
@@ -196,7 +196,7 @@
       "dailyRate": 1800,
       "mileage": 8500,
       "color": "Sarthe Gray",
-      "status": "approved",
+      "status": "pending",
       "imageUrl": "https://static.oneclickdrive.com/uploads/cars/McLaren-720S-2020_33804_30183095122-11_small.jpg?pe=3",
       "description": "4.0L Twin-Turbo V8 with 710 HP. Full MSO Carbon Fiber Package.",
       "owner": {
@@ -212,7 +212,7 @@
         "Dihedral Doors"
       ],
       "submissionDate": "2023-05-01T10:00:00Z",
-      "lastUpdated": "2023-05-03T16:20:00Z"
+      "lastUpdated": "2025-07-12T06:57:57.161Z"
     },
     {
       "id": "9",
