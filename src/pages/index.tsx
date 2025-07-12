@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Layout() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary to-orange-400 flex flex-col">
+    <div className="max-h-screen bg-gradient-to-b from-primary to-orange-400 flex flex-col h-full">
       <header className="bg-gray-900 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
           <div className="w-48 h-16 flex items-center">

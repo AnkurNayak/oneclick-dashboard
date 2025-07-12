@@ -14,7 +14,7 @@ const PaginationComponent = ({
   onPageChange: (newPage: number) => void;
 }) => {
   return (
-    <div className="z-10 bg-accent border border-card sm:bottom-0 sm:inset-x-0 sm:absolute">
+    <div className="z-10 bg-accent border border-card bottom-0 inset-x-0 absolute">
       <div
         className="flex items-center justify-center space-x-4"
         style={{ height: "72px" }}

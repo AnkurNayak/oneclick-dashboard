@@ -61,9 +61,11 @@ const CarDetailsSheet = ({
         onCarUpdate(updateCarRes.data);
         toast.success("Car data updated successfully");
       }
+      if (updateCarRes.error) {
+        toast.error("Failed to update car data");
+      }
     } catch (err) {
       console.error("Error updating car", err);
-      toast.error("Failed to update car details");
     } finally {
       setIsLoading(false);
     }

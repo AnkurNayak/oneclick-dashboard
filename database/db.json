@@ -9,9 +9,9 @@
       "dailyRate": 12,
       "mileage": 4500,
       "color": "Daytona Gray",
-      "status": "pending",
+      "status": "rejected",
       "imageUrl": "https://static.oneclickdrive.com/uploads/premcars/Audi-R8-Coupe-2022_11151_6890111894-10_11151__small.jpg",
-      "description": "V10 engine with 602 HP. Full carbon fiber package. Like-new condition with ceramic coating.",
+      "description": "V10 ",
       "owner": {
         "name": "Ahmed Al-Farsi",
         "email": "ahmed.alfarsi@example.com",
@@ -20,12 +20,10 @@
       },
       "location": "Dubai Marina",
       "features": [
-        "Quattro AWD",
-        "Bang & Olufsen 3D Sound",
-        "Virtual Cockpit"
+        "Quattro AWD"
       ],
       "submissionDate": "2023-05-10T14:30:00Z",
-      "lastUpdated": "2025-07-10T21:49:02.880Z"
+      "lastUpdated": "2025-07-11T02:03:26.805Z"
     },
     {
       "id": "2",
@@ -248,7 +246,7 @@
       "make": "Mercedes-Benz",
       "model": "E450 Convertible",
       "year": 2020,
-      "price": 225000,
+      "price": 225,
       "dailyRate": 750,
       "mileage": 22500,
       "color": "Rubellite Red",
@@ -268,7 +266,7 @@
         "AIRSCARF Neck Heating"
       ],
       "submissionDate": "2023-05-22T09:45:00Z",
-      "lastUpdated": "2023-05-22T09:45:00Z"
+      "lastUpdated": "2025-07-12T06:34:46.691Z"
     },
     {
       "id": "11",

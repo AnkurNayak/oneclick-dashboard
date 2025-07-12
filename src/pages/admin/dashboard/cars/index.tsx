@@ -106,7 +106,7 @@ const AdminCarsPage = ({
   };
 
   return (
-    <div className="bg-card flex min-w-0 flex-auto flex-col dark:bg-transparent sm:absolute w-full inset-0">
+    <div className="bg-card flex min-w-0 flex-auto flex-col dark:bg-transparent absolute w-full inset-0">
       <div className="relative flex flex-0 border-b border-gray-200 dark:border-accent px-6 py-8 items-center justify-between md:px-8">
         <h4 className="text-4xl font-extrabold tracking-tight">Car Listing</h4>
         <CarFilterer onFilterChange={handleFilterChange} />

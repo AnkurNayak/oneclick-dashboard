@@ -21,8 +21,8 @@ const CarsTable = ({
   };
 
   return (
-    <div className="flex flex-auto overflow-hidden">
-      <div className="flex flex-auto flex-col overflow-hidden sm:mb-18 sm:overflow-y-auto">
+    <div className="flex flex-auto overflow-hidden max-h-dvh">
+      <div className="flex flex-auto flex-col overflow-hidden overflow-y-auto mb-18">
         <div className="grid">
           <div className="car-table-grid sticky top-0 z-10 grid gap-4 bg-gray-50 px-6 py-4 text-md font-semibold shadow dark:bg-black dark:bg-opacity-5 md:px-8">
             <div></div>

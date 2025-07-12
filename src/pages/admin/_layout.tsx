@@ -12,14 +12,25 @@ const AdminDashboardLayout = ({ page }: { page: ReactNode }) => {
     setIsMounted(true);
   }, []);
 
+  // if modal open bodt overflow hidden
+  useEffect(() => {
+    if (ui.isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [ui.isModalOpen]);
+
   if (!isMounted) return <div>Loading...</div>;
 
   return (
-    <main className={`layout ${ui.theme} text-foreground min-h-screen`}>
+    <main
+      className={`layout ${ui.theme} text-foreground h-dvh overflow-hidden`}
+    >
       <SidebarComponent />
       <div className="flex flex-col flex-auto w-full min-w-0 bg-background">
         <HeaderComponent />
-        <div className="flex flex-col flex-auto relative overflow-x-hidden">
+        <div className="flex flex-col flex-auto relative overflow-hidden">
           {page}
         </div>
       </div>

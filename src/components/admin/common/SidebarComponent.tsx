@@ -44,7 +44,7 @@ const SidebarComponent = () => {
           exit={{ marginLeft: -280 }}
           className="bg-gray-900 dark:bg-sidebar-accent left-0 bottom-0 top-0"
           style={{
-            zIndex: 200,
+            zIndex: 500,
             minWidth: "280px",
             maxWidth: "280px",
             position:
